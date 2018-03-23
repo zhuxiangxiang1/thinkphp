@@ -14,7 +14,8 @@ class index extends Controller
      */
     public function index()
     {
-        return view();
+//        return view();
+        echo "admin";
     }
 
 
