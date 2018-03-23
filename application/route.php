@@ -1,4 +1,4 @@
 <?php
 use think\Route;
 
-//Route::any("/admin","admin/index/index");
+Route::any("/admin","admin/Index/index");

@@ -5,7 +5,7 @@ namespace app\admin\controller;
 use think\Controller;
 use think\Request;
 
-class index extends Controller
+class Index extends Controller
 {
     /**
      * 显示资源列表
@@ -14,8 +14,7 @@ class index extends Controller
      */
     public function index()
     {
-//        return view();
-        echo "admin";
+        return view();
     }
 
 
