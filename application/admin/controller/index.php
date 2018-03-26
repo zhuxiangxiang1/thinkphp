@@ -14,6 +14,10 @@ class Index extends Controller
      */
     public function index()
     {
+//        检查是否存在登录信息
+        if(empty(session("user.user_id")) || session("user.user_id")==null){
+            $this->redirect('/admin/login');
+        }
         return view();
     }
 
