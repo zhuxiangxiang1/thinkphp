@@ -1,0 +1,204 @@
+{extend name="index/base" /}
+
+{block name="content"}
+<div class="content-wrapper">
+
+    <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">
+                <small>Copyright © Your Website 2018</small>
+            </div>
+        </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" >Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form class="form-horizontal" role="form" action="{:url('/admin/addyunshu')}" method="post"
+          onsubmit="return checkpost()">
+        <fieldset>
+            <legend>补给项</legend>
+
+
+            <label class="col-sm-2 control-label" for="ds_password">车号</label>
+            <div class="col-sm-4">
+
+                <select id="carnumber" class="form-control" name="carnumber">
+                    {volist name="carnumber" id="vo"}
+                    <option value="{$vo.id}">{$vo.carnumber}</option>
+                    {/volist}
+                </select>
+            </div>
+
+
+            <label class="col-sm-2 control-label" >驾驶员</label>
+            <div class="col-sm-4">
+
+                <select id="drive" class="form-control" name="drive">
+                    {volist name="drive" id="vo"}
+                    <option value="{$vo.id}">{$vo.drive}</option>
+                    {/volist}
+                </select>
+            </div>
+            <label class="col-sm-2 control-label" >补给目的</label>
+            <div class="col-sm-4">
+                <select id="buji_mudi" class="form-control" name="buji_mudi">
+                    <option value="1">加油</option>
+                    <option value="2">过路费</option>
+                    <option value="3">其他报销</option>
+
+                </select>
+            </div>
+
+            <label class="col-sm-2 control-label" for="ds_password">补给时间</label>
+
+            <div class="input-group date form_datetime col-md-5" data-date="2018-03-16T05:25:07Z"
+                 data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                <input class="form-control" value="{$res.buji_time? $res.buji_time:''}" id="buji_time"
+                       name="buji_time" size="16" type="text" value=""
+                       readonly>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+            </div>
+
+            <label class="col-sm-2 control-label"
+                   for="ds_password">补给详情</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" rows="3" name="buji_desc" >{$res.buji_desc? $res.buji_desc:''}</textarea>
+
+            </div>
+
+
+            <label class="col-sm-2 control-label"
+                   for="ds_password">备注</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" rows="3" name="comment" >{$res.comment? $res.comment:''}</textarea>
+
+            </div>
+            <button  class="btn btn-primary" style="float: right" type="submit" id="add" >提交</button>
+
+
+        </fieldset>
+        <!--隐藏表单 1：运输-->
+        <input type="hidden" name="type" value="1">
+    </form>
+
+    <script src="../../static/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="../../static/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!--时间插件-->
+    <script src="../../static/admin/vendor/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../../static/admin/vendor/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="../../static/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="../../static/admin/vendor/chart.js/Chart.min.js"></script>
+    <script src="../../static/admin/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="../../static/admin/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="../../static/admin/vendor/js/sb-admin.min.js"></script>
+    <!-- Custom scripts for this page-->
+    <script src="../../static/admin/vendor/js/sb-admin-datatables.min.js"></script>
+    <script src="../../static/admin/vendor/js/sb-admin-charts.min.js"></script>
+</div>
+
+<script>
+
+    $(function () {
+
+        var carnumber="{$res.carnumber? $res.carnumber:''}";
+        var drive="{$res.drive? $res.drive:''}";
+
+        var buji_mudi="{$res.buji_mudi? $res.buji_mudi:''}";
+
+        if(carnumber>0){
+
+            carnumber=carnumber-1
+            drive=drive-1
+
+            buji_mudi=buji_mudi-1
+
+            $('#carnumber option:eq('+carnumber+')').attr('selected','selected');
+            $('#drive option:eq('+drive+')').attr('selected','selected');
+            $('#buji_mudi option:eq('+buji_mudi+')').attr('selected','selected');
+        }
+
+    })
+    $('.form_datetime').datetimepicker({
+        weekStart: 0, //一周从哪一天开始
+        todayBtn:  1, //
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1,
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd hh:ii',//显示格式
+//        minView: "second",//设置只显示到月份
+        initialDate: new Date(),
+        autoclose: true,//选中自动关闭
+        todayBtn: true,//显示今日按钮
+
+    });
+
+    //    //默认获取当前日期
+    //    var today = new Date();
+    //    var nowdate = (today.getFullYear()) + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+    //    //对日期格式进行处理
+    //    var date = new Date(nowdate);
+    //    var mon = date.getMonth() + 1;
+    //    var day = date.getDate();
+    //
+    //    var housr=today.getHours();
+    //    var minutes=today.getMinutes();
+    //
+    //    var mydate =
+    //            date.getFullYear() + "-" + (mon < 10 ? "0" + mon : mon) + "-" + (day < 10 ? "0" + day : day) +" "+(housr
+    //            <10 ? "0"+housr :housr) + ":" + (minutes < 10 ? "0" + minutes : minutes);
+
+
+
+    function checkpost() {
+
+
+        //检查新增
+        var carnumber=$("#carnumber").val();
+        var drive=$("#drive").val();
+        var buji_mudi=$("#buji_mudi").val();
+        var buji_time=$("#buji_time").val();
+        var buji_desc=$("#buji_desc").val();
+
+
+        if(carnumber == "" ||  drive == ""  || buji_mudi == "" || buji_time == ""
+                || buji_desc == "" ){
+            alert("信息不能为空")
+            return false;
+        }
+
+    }
+
+
+</script>
+{/block}
+

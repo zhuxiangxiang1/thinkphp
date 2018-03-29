@@ -1,0 +1,185 @@
+{extend name="index/base" /}
+
+{block name="content"}
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+
+        <!-- Example DataTables Card-->
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table" ></i> 数据表统计
+
+                <button style="float: right" class="btn btn-primary" id="add">添加</button>
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>id</th>
+
+                            <th>车号</th>
+                            <th>驾驶员</th>
+                            <th>提箱地点</th>
+                            <th>还箱地点</th>
+                            <th>目的</th>
+                            <th>货代</th>
+                            <th>船名／航次</th>
+
+
+                            <th>集装箱号</th>
+                            <th>尺寸／类型</th>
+                            <th>地址</th>
+                            <th>提单号</th>
+                            <th>铅封号</th>
+                            <th>对接方</th>
+                            <th>营运人</th>
+                            <th>联系方式</th>
+                            <th>日期</th>
+                            <th>出场时间</th>
+                            <th>进场时间</th>
+                            <th>备注</th>
+                            <th style="width: 90px;">操作</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {volist name='data' id='vo'}
+                        <tr>
+                            <td>{$vo.id}</td>
+
+                            <td>{$vo.carnumber}</td>
+                            <td>{$vo.drive}</td>
+                            <td>{$vo.tixiang_place}</td>
+                            <td>{$vo.huanxiang_place}</td>
+                            <td>{$vo.mudi}</td>
+                            <td>{$vo.huodai}</td>
+                            <td>{$vo.ship_name}</td>
+
+
+                            <td>{$vo.jizhuang_code}</td>
+                            <td>{$vo.size}</td>
+                            <td>{$vo.place}</td>
+                            <td>{$vo.tidan_code}</td>
+                            <td>{$vo.qianfen_code}</td>
+                            <td>{$vo.duijiefang}</td>
+                            <td>{$vo.yingyunren}</td>
+                            <td>{$vo.lianxifangshi}</td>
+                            <td>{$vo.nowdate}</td>
+                            <td>{$vo.date_out}</td>
+                            <td>{$vo.date_in}</td>
+                            <td>{$vo.comment}</td>
+                            <td>
+                                <button  class="btn btn-primary btn-sm edit" data-value="{$vo.id}"
+                                >修改
+                                </button>
+                                <button  class="btn btn-primary btn-sm delete" data-value="{$vo.id}"
+                                >删除
+                                </button>
+                            </td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        </div>
+    </div>
+    <!-- /.container-fluid-->
+    <!-- /.content-wrapper-->
+    <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">
+                <small>Copyright © Your Website 2018</small>
+            </div>
+        </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" id="logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="../../static/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="../../static/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="../../static/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="../../static/admin/vendor/chart.js/Chart.min.js"></script>
+    <script src="../../static/admin/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="../../static/admin/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="../../static/admin/vendor/js/sb-admin.min.js"></script>
+    <!-- Custom scripts for this page-->
+    <script src="../../static/admin/vendor/js/sb-admin-datatables.min.js"></script>
+    <script src="../../static/admin/vendor/js/sb-admin-charts.min.js"></script>
+</div>
+
+<script>
+    $("#add").click(function () {
+        window.location.href="{:url('/admin/addyunshu')}";
+    })
+
+    $(".delete").click(function () {
+        var id =$(this).attr('data-value');
+        var status=confirm("您确定要删除么");
+        if(!status){
+            return false;
+        }
+
+        //如果点击确认则 正常删除
+        $.ajax({
+            type:'post',
+            data:{'id':id,'type':0},
+            url:"/index.php/admin/deleteyunshu",
+            success:function (msg) {
+                if(msg.code==1){
+                    window.location.href=window.location.href;
+                }
+            }
+        })
+    })
+
+
+    //修改
+    $(".edit").click(function () {
+        var id =$(this).attr('data-value');
+        //如果点击确认则 正常删除
+        $.ajax({
+            type:'post',
+            data:{'id':id,'type':1},
+            url:"/index.php/admin/deleteyunshu",
+            success:function (msg) {
+                if(msg.code==1){
+                    window.location.href="{:url('/admin/addyunshu')}";
+                }
+            }
+        })
+    })
+
+</script>
+
+{/block}
+

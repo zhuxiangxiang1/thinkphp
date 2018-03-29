@@ -1,0 +1,313 @@
+{extend name="index/base" /}
+
+{block name="content"}
+<div class="content-wrapper">
+
+    <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">
+                <small>Copyright © Your Website 2018</small>
+            </div>
+        </div>
+    </footer>
+    <!-- Scroll to Top Button-->
+
+
+    <form class="form-horizontal" role="form" action="{:url('/admin/addyunshu')}" method="post"
+          onsubmit="return checkpost()">
+        <fieldset>
+            <legend>运输项</legend>
+
+
+
+            <label class="col-sm-2 control-label" >日期</label>
+            <div class="input-group date form_datetime col-md-5" data-date="2018-03-16T05:25:07Z"
+                 data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                <input class="form-control" id="nowdate" name="nowdate" size="16" type="text"
+                       value="{$res.nowdate? $res.nowdate:$now}"
+                       readonly>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+            </div>
+
+
+
+            <label class="col-sm-2 control-label" for="ds_password">车号</label>
+            <div class="col-sm-4">
+
+                <select id="carnumber" class="form-control" name="carnumber">
+                    {volist name="carnumber" id="vo"}
+                    <option value="{$vo.id}">{$vo.carnumber}</option>
+                    {/volist}
+                </select>
+            </div>
+
+
+            <label class="col-sm-2 control-label" >驾驶员</label>
+            <div class="col-sm-4">
+
+                <select id="drive" class="form-control" name="drive">
+                    {volist name="drive" id="vo"}
+                    <option value="{$vo.id}">{$vo.drive}</option>
+                    {/volist}
+                </select>
+            </div>
+            <label class="col-sm-2 control-label" >提箱地点</label>
+            <div class="col-sm-4">
+                <select id="tixiang_place" class="form-control" name="tixiang_place">
+                    <option value="1">海门</option>
+                    <option value="2">龙门</option>
+                    <option value="3">大麦屿</option>
+                    <option value="4">温州</option>
+                </select>
+            </div>
+
+            <label class="col-sm-2 control-label"
+                   for="ds_username">还箱地点</label>
+            <div class="col-sm-4">
+                <select id="huanxiang_place" class="form-control" name="huanxiang_place">
+                    <option value="1">海门</option>
+                    <option value="2">龙门</option>
+                    <option value="3">大麦屿</option>
+                    <option value="4">温州</option>
+                </select>
+            </div>
+
+            <label class="col-sm-2 control-label" for="ds_username">尺寸／类型</label>
+            <div class="col-sm-4">
+                <select id="size" class="form-control" name="size">
+                    <option value="1">20GP</option>
+                    <option value="2">40HC</option>
+                    <option value="3">40GP</option>
+                    <option value="4">45GP</option>
+                    <option value="5">特殊</option>
+                </select>
+            </div>
+
+            <label class="col-sm-2 control-label" for="ds_username">目的</label>
+            <div class="col-sm-4">
+                <select id="mudi" class="form-control" name="mudi">
+                    <option value="1">重出</option>
+                    <option value="2">重进</option>
+                    <option value="3">修箱</option>
+                    <option value="4">特殊</option>
+                </select>
+            </div>
+
+            <label class="col-sm-2 control-label" for="ds_password">货代</label>
+            <div class="col-sm-4">
+                <input class="form-control" value="{$res.huodai? $res.huodai:''}" id="huodai"
+                       name="huodai" type="text" />
+            </div>
+
+            <label class="col-sm-2 control-label" for="ds_password">船名／航次</label>
+            <div class="col-sm-4">
+                <input class="form-control" value="{$res.ship_name? $res.ship_name:''}" id="ship_name"
+                       name="ship_name" type="text" />
+            </div>
+
+
+
+            <label class="col-sm-2 control-label" >集装箱号</label>
+            <div class="col-sm-4">
+                <input class="form-control" id="jizhuang_code" name="jizhuang_code" type="text" value="{$res.jizhuang_code? $res.jizhuang_code:''}" />
+            </div>
+
+
+            <label class="col-sm-2 control-label" for="ds_password">地址</label>
+            <div class="col-sm-4">
+                <input class="form-control" id="place" type="text" name="place"
+                       value="{$res.place? $res.place:''}" placeholder="椒江"/>
+            </div>
+
+
+            <label class="col-sm-2 control-label" >提单号</label>
+            <div class="col-sm-4">
+                <input class="form-control" value="{$res.tidan_code? $res.tidan_code:''}" id="tidan_code"
+                       name="tidan_code" type="text"/>
+            </div>
+            <label class="col-sm-2 control-label" >铅封号</label>
+            <div class="col-sm-4">
+                <input class="form-control" value="{$res.qianfen_code? $res.qianfen_code:''}" id="qianfen_code"
+                       name="qianfen_code" type="text" />
+            </div>
+
+            <label class="col-sm-2 control-label"
+                   for="ds_username">对接方</label>
+            <div class="col-sm-4">
+                <input class="form-control"  value="{$res.duijiefang? $res.duijiefang:''}" id="duijiefang"
+                       name="duijiefang" type="text" />
+            </div>
+            <label class="col-sm-2 control-label" for="ds_password">营运人</label>
+            <div class="col-sm-4">
+                <input class="form-control" value="{$res.yingyunren? $res.yingyunren:''}" id="yingyunren"
+                       name="yingyunren" type="text" />
+            </div>
+
+
+            <label class="col-sm-2 control-label" for="ds_username">出场时间</label>
+            <div class="input-group date form_datetime col-md-5" data-date="2018-03-16T05:25:07Z"
+                 data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                <input class="form-control" value="{$res.date_out? $res.date_out:''}" id="date_out"
+                       name="date_out" size="16" type="text" value="" readonly>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+            </div>
+            <label class="col-sm-2 control-label" for="ds_password">进场时间</label>
+
+            <div class="input-group date form_datetime col-md-5" data-date="2018-03-16T05:25:07Z"
+                 data-date-format="dd MM yyyy - HH:ii p" data-link-field="dtp_input1">
+                <input class="form-control" value="{$res.date_in? $res.date_in:''}" id="date_in"
+                       name="date_in" size="16" type="text" value=""
+                       readonly>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+            </div>
+
+
+            <label class="col-sm-2 control-label" for="ds_password">联系方式</label>
+            <div class="col-sm-4">
+                <input class="form-control" value="{$res.lianxifangshi? $res.lianxifangshi:''}" id="lianxifangshi"
+                       type="text" name="lianxifangshi"/>
+            </div>
+
+            <label class="col-sm-2 control-label"
+                   for="ds_password">备注</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" rows="3" name="comment" >{$res.comment? $res.comment:''}</textarea>
+
+            </div>
+            <button  class="btn btn-primary" style="float: right" type="submit" id="add" >提交</button>
+
+
+        </fieldset>
+        <!--隐藏表单 0：运输-->
+        <input type="hidden" name="type" value="0">
+    </form>
+
+    <script src="../../static/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="../../static/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!--时间插件-->
+    <script src="../../static/admin/vendor/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="../../static/admin/vendor/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="../../static/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="../../static/admin/vendor/chart.js/Chart.min.js"></script>
+    <script src="../../static/admin/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="../../static/admin/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="../../static/admin/vendor/js/sb-admin.min.js"></script>
+    <!-- Custom scripts for this page-->
+    <script src="../../static/admin/vendor/js/sb-admin-datatables.min.js"></script>
+    <script src="../../static/admin/vendor/js/sb-admin-charts.min.js"></script>
+</div>
+
+
+<script>
+
+    $(function () {
+        var size="{$res.size? $res.size:''}";
+        var carnumber="{$res.carnumber? $res.carnumber:''}";
+        var drive="{$res.drive? $res.drive:''}";
+        var tixiang_place="{$res.tixiang_place? $res.tixiang_place:''}";
+        var huanxiang_place="{$res.huanxiang_place? $res.huanxiang_place:''}";
+        var mudi="{$res.mudi? $res.mudi:''}";
+
+        if(size>0){
+            size=size-1
+            carnumber=carnumber-1
+            drive=drive-1
+            tixiang_place=tixiang_place-1
+            huanxiang_place=huanxiang_place-1
+            mudi=mudi-1
+            $('#size option:eq('+size+')').attr('selected','selected');
+            $('#carnumber option:eq('+carnumber+')').attr('selected','selected');
+            $('#drive option:eq('+drive+')').attr('selected','selected');
+            $('#tixiang_place option:eq('+tixiang_place+')').attr('selected','selected');
+            $('#huanxiang_place option:eq('+huanxiang_place+')').attr('selected','selected');
+            $('#mudi option:eq('+mudi+')').attr('selected','selected');
+        }
+
+    })
+    $('.form_datetime').datetimepicker({
+        weekStart: 0, //一周从哪一天开始
+        todayBtn:  1, //
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        showMeridian: 1,
+        language: 'zh-CN',
+        format: 'yyyy-mm-dd hh:ii',//显示格式
+//        minView: "second",//设置只显示到月份
+        initialDate: new Date(),
+        autoclose: true,//选中自动关闭
+        todayBtn: true,//显示今日按钮
+
+    });
+
+    //    //默认获取当前日期
+    //    var today = new Date();
+    //    var nowdate = (today.getFullYear()) + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+    //    //对日期格式进行处理
+    //    var date = new Date(nowdate);
+    //    var mon = date.getMonth() + 1;
+    //    var day = date.getDate();
+    //
+    //    var housr=today.getHours();
+    //    var minutes=today.getMinutes();
+    //
+    //    var mydate =
+    //            date.getFullYear() + "-" + (mon < 10 ? "0" + mon : mon) + "-" + (day < 10 ? "0" + day : day) +" "+(housr
+    //            <10 ? "0"+housr :housr) + ":" + (minutes < 10 ? "0" + minutes : minutes);
+
+
+
+    function checkpost() {
+        var nowdate=$("#nowdate").val();
+        var jizhuang_code=$("#jizhuang_code").val();
+        var size=$("#size").val();
+        var place=$("#place").val();
+        var tidan_code=$("#tidan_code").val();
+        var qianfen_code=$("#qianfen_code").val();
+        var duijiefang=$("#duijiefang").val();
+        var yingyunren=$("#yingyunren").val();
+        var date_out=$("#date_out").val();
+        var date_in=$("#date_in").val();
+        var lianxifangshi=$("#lianxifangshi").val();
+
+
+        //第二次新增
+        var carnumber=$("#carnumber").val();
+        var drive=$("#drive").val();
+        var tixiang_place=$("#tixiang_place").val();
+        var huanxiang_place=$("#huanxiang_place").val();
+        var mudi=$("#mudi").val();
+        var huodai=$("#huodai").val();
+        var ship_name=$("#ship_name").val();
+
+        if(date_in == "" || date_out == "" || nowdate == ""){
+            alert("时间不能为空")
+            return false;
+        }
+        if(place == "" ||  lianxifangshi == ""  || jizhuang_code == "" || size == ""
+                || tidan_code == "" || qianfen_code == "" || duijiefang == "" || yingyunren == "" ){
+            alert("参数不能为空")
+            return false;
+        }
+
+        if(carnumber == "" ||  drive == ""  || tixiang_place == "" || huanxiang_place == ""
+                || mudi == "" || huodai == "" || ship_name == ""){
+            alert("信息不能为空")
+            return false;
+        }
+
+    }
+
+
+</script>
+{/block}
+
+

@@ -13,13 +13,22 @@ return [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址
-    'hostname'        => 'rdsnnqanannqanao.mysql.rds.aliyuncs.com',
+//    'hostname'        => 'rdsnnqanannqanao.mysql.rds.aliyuncs.com',
+
     // 数据库名
-    'database'        => 'highbasetest',
+//    'database'        => 'highbasetest',
+
     // 用户名
-    'username'        => 'hitest',
+//    'username'        => 'hitest',
+
     // 密码
-    'password'        => 'hitesT12345',
+//    'password'        => 'hitesT12345',
+
+    'hostname'        => '127.0.0.1',
+    'database'        => 'mydatabase',
+    'username'        => 'root',
+    'password'        => '1127',
+
     // 端口
     'hostport'        => '',
     // 连接dsn

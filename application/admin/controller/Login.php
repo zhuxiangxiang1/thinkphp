@@ -42,13 +42,14 @@ class Login extends Controller
 //        查找数据库中是否存在该记录
         $res=$user->where(["user_name"=>$name,"user_password"=>$password])->find();
 
+
         if(empty($res)){
             $this->error("账号或者密码错误");
         }
 
 //        登录成功 设置session
         session("user",$res);
-        return $this->redirect("/admin/index");
+        return $this->redirect("/index.php/admin/index");
     }
 
     /***
@@ -58,6 +59,8 @@ class Login extends Controller
      */
     public function logout()
     {
+
         session("user",null);
+        return $this->success("退出成功");
     }
 }
