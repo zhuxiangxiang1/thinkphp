@@ -27,7 +27,7 @@ return [
     'hostname'        => '127.0.0.1',
     'database'        => 'mydatabase',
     'username'        => 'root',
-    'password'        => '1127',
+    'password'        => '123456',
 
     // 端口
     'hostport'        => '',
