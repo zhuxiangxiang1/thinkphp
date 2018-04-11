@@ -140,28 +140,28 @@ class Index extends Controller
      */
     public function saveyunshu(Request $request)
     {
-        if(empty(session("yunshu_id")) || session("yunshu_id")==null){
-            //接受参数并保存(新增)
-            $res=DB::table("tp_yunshu")->insert($request->post());
-        }else{
-            //保存
-            $id=session("yunshu_id");
-            $res=DB::table("tp_yunshu")->where('id',$id)->update($request->post());
-        }
+        // if(empty(session("yunshu_id")) || session("yunshu_id")==null){
+        //     //接受参数并保存(新增)
+        //     $res=DB::table("tp_yunshu")->insert($request->post());
+        // }else{
+        //     //保存
+        //     $id=session("yunshu_id");
+        //     $res=DB::table("tp_yunshu")->where('id',$id)->update($request->post());
+        // }
 
-        if($res==1){
-            //清除修改的缓存
-            session("yunshu_id",null);
-            //插入成功 判断修改／新增的是运输 还是 补给
-            if($request->post("type") == 0){
-                $this->success("保存成功",$this->uuu."/admin/yunshu");
-            }else{
-                $this->success("保存成功",$this->uuu."/admin/bujilist");
-            }
+        // if($res==1){
+        //     //清除修改的缓存
+        //     session("yunshu_id",null);
+        //     //插入成功 判断修改／新增的是运输 还是 补给
+        //     if($request->post("type") == 0){
+        //         $this->success("保存成功",$this->uuu."/admin/yunshu");
+        //     }else{
+        //         $this->success("保存成功",$this->uuu."/admin/bujilist");
+        //     }
 
-        }else{
-            $this->success("保存失败，请检查参数");
-        }
+        // }else{
+        //     $this->success("保存失败，请检查参数");
+        // }
     }
 
     /***
