@@ -24,7 +24,7 @@ return [
     // 密码
 //    'password'        => 'hitesT12345',
 
-    'hostname'        => 'localhost',
+    'hostname'        => '127.0.0.1',
     'database'        => 'mydatabase',
     'username'        => 'root',
     'password'        => '123456',
