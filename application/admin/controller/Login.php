@@ -7,7 +7,14 @@ use think\Request;
 use app\admin\model\user;
 
 class Login extends Controller
-{
+{   
+    public $uuu="";
+
+    public function __CONSTRUCT(){
+        if($_SERVER["HTTP_HOST"] == "tp.com"){
+            $this->uuu="/index.php";
+        }
+    }
     /**
      * zxx 2018-3-26
      * 登录主页
@@ -49,7 +56,7 @@ class Login extends Controller
 
 //        登录成功 设置session
         session("user",$res);
-        return $this->redirect("/index.php/admin/index");
+        return $this->redirect($this->uuu."/admin/index");
     }
 
     /***

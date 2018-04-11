@@ -11,17 +11,24 @@ use PHPExcel;
 class Index extends Controller
 {
 
+    public $uuu="";
+
     /***
      *  检查权限
      *  zxx 2018-3-28
      */
     public function __construct(Request $request)
-    {
+    {   
+        if($_SERVER["HTTP_HOST"] == "tp.com"){
+            $this->uuu="/index.php";
+        }
+
         $auth=new Auth();
         $islogin=$auth->index();
         if(!$islogin){
-            $this->redirect("/index.php/admin/login");
+            $this->redirect($this->uuu."/admin/login");
         }
+ 
     }
 
 
@@ -147,9 +154,9 @@ class Index extends Controller
             session("yunshu_id",null);
             //插入成功 判断修改／新增的是运输 还是 补给
             if($request->post("type") == 0){
-                $this->success("保存成功","/index.php/admin/yunshu");
+                $this->success("保存成功",$this->uuu."/admin/yunshu");
             }else{
-                $this->success("保存成功","/index.php/admin/bujilist");
+                $this->success("保存成功",$this->uuu."/admin/bujilist");
             }
 
         }else{
@@ -178,7 +185,7 @@ class Index extends Controller
 
         if($res==1){
             //插入成功
-            $this->success("删除成功","/index.php/admin/yunshu");
+            $this->success("删除成功",$this->uuu."/admin/yunshu");
         }else{
             $this->success("删除失败，请检查参数");
         }
@@ -341,7 +348,7 @@ class Index extends Controller
             ->select();
 
         if(empty($data)){
-            $this->error("暂无数据导出","index.php/admin/index");
+            $this->error("暂无数据导出",$this->uuu."/admin/index");
         }
 
         //整合数据
@@ -446,6 +453,6 @@ class Index extends Controller
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');
 
-        $this->redirect("index.php/admin/index");
+        $this->redirect($this->uuu."/admin/index");
     }
 }

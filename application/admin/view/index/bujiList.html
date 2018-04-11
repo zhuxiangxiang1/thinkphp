@@ -123,7 +123,7 @@
         $.ajax({
             type:'post',
             data:{'id':id,'type':0},
-            url:"/index.php/admin/deleteyunshu",
+            url:"{:url('/admin/deleteyunshu')}",
             success:function (msg) {
                 if(msg.code==1){
                     window.location.href=window.location.href;
@@ -140,7 +140,7 @@
         $.ajax({
             type:'post',
             data:{'id':id,'type':1},
-            url:"/index.php/admin/deleteyunshu",
+            url:"{:url('/admin/deleteyunshu')}",
             success:function (msg) {
                 if(msg.code==1){
                     window.location.href="{:url('/admin/addbuji')}";
