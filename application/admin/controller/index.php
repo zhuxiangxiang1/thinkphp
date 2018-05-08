@@ -139,8 +139,10 @@ class Index extends Controller
      * zxx 2018-3-27
      */
     public function saveyunshu(Request $request)
-    {
-        if(empty(session("yunshu_id")) || session("yunshu_id")==null){
+    {    
+
+        $yunshu_id = session("yunshu_id");
+        if(empty($yunshu_id) || $yunshu_id==null){
             //接受参数并保存(新增)
             $res=DB::table("tp_yunshu")->insert($request->post());
         }else{
