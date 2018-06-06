@@ -27,7 +27,7 @@ return [
     'hostname'        => '119.29.79.57',
     'database'        => 'mydatabase',
     'username'        => 'root',
-    'password'        => '123456',
+    'password'        => 'Zxxzxx123',
 
     // 端口
     'hostport'        => '',
