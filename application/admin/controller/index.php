@@ -73,7 +73,7 @@ class Index extends Controller
         $url = $this->uuu."/admin/yunshu" ; 
         $page = CustomPage::getSelfPageView($nowpage,$totalPage,$url);
         
-
+        echo $page;exit;
         //查出所有数据
         $data=Db::table("tp_yunshu")
             ->alias(['tp_yunshu'=>'y','tp_drive'=>'d','tp_carnumber'=>'c'])
