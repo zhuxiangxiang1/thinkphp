@@ -2,6 +2,20 @@
 
 {block name="content"}
 
+
+    <style type="text/css">
+        .pagination li {
+            position: relative;
+            float: left;
+            padding: 6px 12px;
+            margin-left: -1px;
+            line-height: 1.42857143;
+            color: #337ab7;
+            text-decoration: none;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+    </style>
 <div class="content-wrapper">
     <div class="container-fluid">
 
@@ -16,7 +30,7 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
+                        <!-- <thead> -->
                         <tr>
                             <th>id</th>
 
@@ -43,7 +57,7 @@
                             <th>备注</th>
                             <th style="width: 90px;">操作</th>
                         </tr>
-                        </thead>
+                        <!-- </thead> -->
 
                         <tbody>
                         {volist name='data' id='vo'}
@@ -83,6 +97,7 @@
                         {/volist}
                         </tbody>
                     </table>
+                    {$page}
                 </div>
             </div>
             <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>

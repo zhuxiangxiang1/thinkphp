@@ -7,7 +7,7 @@ use think\Request;
 use think\Db;
 use PHPExcel_IOFactory;
 use PHPExcel;
-
+use app\Tools\CustomPage;
 class Index extends Controller
 {
 
@@ -50,8 +50,29 @@ class Index extends Controller
      * 运输项 展示
      * zxx 2018-3-26
      */
-    public function yunshu()
-    {
+    public function yunshu(Request $request)
+    {   
+        //获取get的数据
+        $GET = $request->get();
+        $nowpage=isset($GET['nowPage'])?$GET['nowPage']:1;
+
+        //定义每页数量
+        $pageSize=10;
+
+        //查询出总条数
+        $num = DB::table("tp_yunshu")
+        ->where(['status'=>0,'type'=>0])
+        ->select();
+        $num = count($num);
+
+        //查询总页数
+        $totalPage = ceil($num/$pageSize);
+
+        //开始页数
+        $start = ($nowpage - 1)* $pageSize;
+        $url = $this->uuu."/admin/yunshu" ; 
+        $page = CustomPage::getSelfPageView($nowpage,$totalPage,$url);
+        
 
         //查出所有数据
         $data=Db::table("tp_yunshu")
@@ -59,7 +80,10 @@ class Index extends Controller
             ->join('tp_drive',"d.id=y.drive")
             ->join('tp_carnumber',"c.id=y.carnumber")
             ->field("y.*,d.drive,c.carnumber")
-            ->where(['status'=>0,'type'=>0])->select();
+            ->where(['status'=>0,'type'=>0])
+            ->limit($start,$pageSize)
+            ->order("id","desc")
+            ->select();
         if(!empty($data)){
             foreach ($data as $k=>$v){
                 if($v['tixiang_place']==1){
@@ -104,8 +128,9 @@ class Index extends Controller
                 }
             }
         }
-
-        return view('',['data'=>$data]);
+        // $this->assign("yunshu",$data);
+        // return $this->fetch();
+        return view('yunshu',['data'=>$data,'page'=>$page]);
     }
 
     /***
