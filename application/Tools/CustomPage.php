@@ -91,20 +91,24 @@ class CustomPage
 
         //最后一页
         if($totalPage > 5){
-	        $pageFinal = $totalPage;
-	        $search['nowPage'] = $pageFinal;
-	        $lastSearchStr =self::arrayToSearchStr($search);
-	        $url = $baseUrl . '?' . $lastSearchStr;
-	        $pageFinal = self::getPageLinkWrapper($url, 'END');
+            $pageFinal = $totalPage;
+            $search['nowPage'] = $pageFinal;
+            $lastSearchStr =self::arrayToSearchStr($search);
+            $url = $baseUrl . '?' . $lastSearchStr;
+            $pageFinal = self::getPageLinkWrapper($url, 'END');
+        }else{
+            $pageFinal="";
         }
 
         //第一页
         if($totalPage > 5){
-	        $pageStart =1;
-	        $search['nowPage'] = $pageStart;
-	        $lastSearchStr =self::arrayToSearchStr($search);
-	        $url = $baseUrl . '?' . $lastSearchStr;
-	        $pageStart = self::getPageLinkWrapper($url, 'Begin');
+            $pageStart =1;
+            $search['nowPage'] = $pageStart;
+            $lastSearchStr =self::arrayToSearchStr($search);
+            $url = $baseUrl . '?' . $lastSearchStr;
+            $pageStart = self::getPageLinkWrapper($url, 'Begin');
+        }else{
+            $pageStart="";
         }
 
 
